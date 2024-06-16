@@ -16,12 +16,7 @@ export class AppService {
 
     await client.replyMessage({
       replyToken: replyToken,
-      messages: [
-        {
-          type: 'text',
-          text: message,
-        },
-      ],
+      messages: [{ type: 'text', text: message }],
     });
   }
 
