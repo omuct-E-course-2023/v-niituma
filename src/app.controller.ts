@@ -1,5 +1,5 @@
-import { WebhookEvent, messagingApi, ClientConfig } from '@line/bot-sdk';
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { WebhookEvent } from '@line/bot-sdk';
+import { Controller, Post, Body } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
