@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import OpenAI from 'openai';
 import { role } from 'static/role';
 import { CHANNEL_ACCESS_TOKEN, CHANNEL_SECRET, OPENAI_TOKEN } from 'secret';
-import { messagingApi, ClientConfig } from '@line/bot-sdk';
+import { messagingApi, ClientConfig, WebhookEvent } from '@line/bot-sdk';
 
 const config: ClientConfig = {
   channelAccessToken: CHANNEL_ACCESS_TOKEN,
@@ -31,5 +31,13 @@ export class AppService {
     });
 
     return completion.choices[0].message.content;
+  }
+
+  async handleEvent(event: WebhookEvent) {
+    if (!(event.type === 'message' && event.message.type === 'text')) return;
+
+    const message = await this.getAiInteraction(event.message.text);
+
+    await this.sendMessage(event.replyToken, message);
   }
 }

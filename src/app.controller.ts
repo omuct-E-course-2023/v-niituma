@@ -11,14 +11,6 @@ export class AppController {
   async handleWebhook(@Body('events') events: WebhookEvent[]): Promise<void> {
     console.log(events);
 
-    events.map(async (event) => {
-      if (!(event.type === 'message' && event.message.type === 'text')) return;
-
-      const message = await this.appService.getAiInteraction(
-        event.message.text,
-      );
-
-      this.appService.sendMessage(event.replyToken, message);
-    });
+    events.map(async (event) => this.appService.handleEvent(event));
   }
 }
